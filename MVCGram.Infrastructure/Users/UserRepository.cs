@@ -27,6 +27,14 @@ namespace MVCGram.Infrastructure.Users
             return user;
         }
 
+        public async Task<User> GetAsync(int id)
+        {
+            var user = await _db.Users
+                .FirstOrDefaultAsync(u => u.Id == id);
+
+            return user;
+        }
+
         public async Task<int> SaveChangesAsync()
         {
             return await _db.SaveChangesAsync();

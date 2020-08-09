@@ -9,5 +9,7 @@ namespace MVCGram.Domain.Users
         Task<int> SaveChangesAsync();
 
         Task<User> FindByUsernameAsync(string username);
+
+        Task<User> GetAsync(int id);
     }
 }

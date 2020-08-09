@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MVCGram.Web.Middleware;
 
 namespace MVCGram.Web
 {
@@ -48,6 +49,8 @@ namespace MVCGram.Web
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseCurrentUserMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

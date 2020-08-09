@@ -7,6 +7,7 @@ namespace MVCGram.Application.Authentication
     public class AuthenticationService : IAuthenticationService
     {
         private readonly IUserRepository _userRepository;
+        private User _currentUser;
 
         public AuthenticationService(IUserRepository userRepository)
         {
@@ -25,10 +26,31 @@ namespace MVCGram.Application.Authentication
                     Username = user.Username
                 };
 
+                _currentUser = user;
+
                 return ApplicationResponse<AuthenticationData>.Success(data);
             }
 
             return ApplicationResponse<AuthenticationData>.Failure("Username or password are incorrect");
+        }
+
+        public User GetCurrentUser()
+        {
+            return _currentUser;
+        }
+
+        public async Task<ApplicationResponse> SetCurrentUserAsync(int userId)
+        {
+            var user = await _userRepository.GetAsync(userId);
+
+            if (user != null)
+            {
+                _currentUser = user;
+
+                return ApplicationResponse.Success();
+            }
+
+            return ApplicationResponse.Failure("User not found");
         }
     }
 }
